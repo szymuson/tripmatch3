@@ -43,6 +43,7 @@ export const Footer = () => {
 
           <form
             onSubmit={submit}
+            noValidate
             data-testid="footer-newsletter-form"
             className="lg:col-span-5 bg-[#F4EFE6] text-[#2A2624] p-6 md:p-8 border border-[#E3A72F] shadow-stamp"
           >
@@ -57,7 +58,7 @@ export const Footer = () => {
               <input
                 id="footer-email"
                 data-testid="footer-email-input"
-                type="email"
+                type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="hello@yours.com"
