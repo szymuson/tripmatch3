@@ -1,0 +1,125 @@
+{
+  "theme_and_archetype": {
+    "theme": "LIGHT",
+    "archetype": "Archetype 1 (Organic & Earthy) - Vintage Travel Poster Variation",
+    "vibe": "Handcrafted, nostalgic, warm, trustworthy, and heavily editorial.",
+    "forbidden": ["Stark white backgrounds (#FFFFFF)", "Generic SaaS gradients", "Purple/Violet/Neon tones", "Card-heavy 'Bootstrap' layouts", "Inter/Roboto for headings"]
+  },
+  "colors": {
+    "backgrounds": {
+      "base": "#F4EFE6",
+      "surface": "#EBE4D8",
+      "overlay": "rgba(42, 38, 36, 0.4)"
+    },
+    "brand": {
+      "primary": "#C84B31",
+      "secondary": "#2D4238",
+      "accent": "#E3A72F",
+      "faded_teal": "#4A7C82"
+    },
+    "text": {
+      "main": "#2A2624",
+      "muted": "#695F59",
+      "inverse": "#F4EFE6"
+    },
+    "borders": {
+      "subtle": "#D1C7B8",
+      "strong": "#2A2624"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Playfair Display, serif",
+      "body": "Work Sans, sans-serif",
+      "mono": "IBM Plex Mono, monospace"
+    },
+    "scales": {
+      "h1": "text-5xl md:text-7xl font-black tracking-tighter leading-none",
+      "h2": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-semibold",
+      "body_lg": "text-lg md:text-xl leading-relaxed",
+      "body": "text-base leading-relaxed",
+      "mono_label": "text-xs uppercase tracking-[0.2em] font-mono text-muted",
+      "price": "text-4xl font-mono tracking-tight text-primary"
+    },
+    "install_instructions": "Add Google Fonts imports for Playfair Display, Work Sans, and IBM Plex Mono in index.css"
+  },
+  "surface_strategies": {
+    "cards": {
+      "style": "Flat solid background (#EBE4D8), sharp 0px border-radius, with an inner 1px border (#D1C7B8) spaced 8px from the edge to mimic a vintage print frame.",
+      "shadow": "No modern drop shadows. Use a solid 4px offset shadow (e.g., shadow-[4px_4px_0px_#2A2624]) for interactive elements."
+    },
+    "calculator_widget": {
+      "style": "Ticket stub aesthetic. Cream background, dashed or dotted border-b to separate sections, monospaced typography for numbers, highly structured layout.",
+      "inputs": "Shadcn components heavily customized: flat backgrounds, sharp corners, bottom-border only (like a fill-in-the-blank form) or subtle outlines. No focus rings, use solid background color change on focus."
+    },
+    "textures": {
+      "global": "Apply a very subtle CSS noise/grain overlay across the entire page (pointer-events-none, mix-blend-multiply, opacity 3%)."
+    }
+  },
+  "layout_and_spacing": {
+    "philosophy": "Generous spacing. Editorial asymmetrical bento grids. Use optical alignment.",
+    "section_padding": "py-24 md:py-32 px-6 md:px-12",
+    "grid_gaps": "gap-8 md:gap-16",
+    "hero": "Split 60/40 layout. Left side: Massive typography, tightly packed. Right side: Bleed image or framed artwork. Or a full-width immersive parallax poster with heavy typography overlay."
+  },
+  "motion_and_interactions": {
+    "global": "Lenis smooth scrolling is highly recommended for premium momentum feel.",
+    "hover_states": "Buttons and cards should use a brutalist 'press' effect: translate-y-[2px] translate-x-[2px] and reduce the solid drop-shadow offset.",
+    "reveals": "Staggered fade-up for gallery and cards. Slow easing (duration-700 ease-out)."
+  },
+  "components_specification": {
+    "navigation": {
+      "style": "Sticky top, glassmorphism disabled. Solid cream background with a 1px bottom border. Monospaced tiny links.",
+      "testid_prefix": "nav-"
+    },
+    "hero": {
+      "elements": "Overline (mono), Massive Title (Playfair), Subtitle (Work Sans), Primary CTA (Solid Primary Color, Sharp Edges).",
+      "testid_prefix": "hero-"
+    },
+    "calculator": {
+      "structure": "Destination search (input), Duration (slider/number), Traveler Style (dropdown/radio cards). Real-time total cost updates. Breakdown visualization using Recharts (stacked bar or simple list with monospace alignment).",
+      "components": "Shadcn Slider, Select, Input.",
+      "testid_prefix": "calc-"
+    },
+    "traveler_styles": {
+      "structure": "5 tall rectangular cards (Backpacker, Family, Couple, Luxury, Adventure). Hover reveals example budget and description.",
+      "testid_prefix": "style-"
+    },
+    "footer": {
+      "style": "Massive typography (text-[8vw] leading-none), dark background (Secondary/Deep Pine Green) with cream text. Newsletter input styled like a vintage telegram form.",
+      "testid_prefix": "footer-"
+    }
+  },
+  "media_assets": {
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1580130718810-358e5e8af61b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2ODh8MHwxfHNlYXJjaHwxfHx2aW50YWdlJTIwdHJhdmVsJTIwcG9zdGVyJTIwbW91bnRhaW5zfGVufDB8fHx8MTc4MTIxMzkzNHww&ixlib=rb-4.1.0&q=85",
+        "category": "Hero Background / Featured Vintage Poster",
+        "description": "WPA Style National Parks Poster"
+      },
+      {
+        "url": "https://images.pexels.com/photos/31376933/pexels-photo-31376933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "Gallery / Luxury Style",
+        "description": "Vintage Swiss Travel Posters"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1757005550382-7b280b41dbd5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2ODh8MHwxfHNlYXJjaHwyfHx2aW50YWdlJTIwdHJhdmVsJTIwcG9zdGVyJTIwbW91bnRhaW5zfGVufDB8fHx8MTc4MTIxMzkzNHww&ixlib=rb-4.1.0&q=85",
+        "category": "Gallery / Adventure Style",
+        "description": "Rocky Mountains Vintage Aesthetic"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1766851265130-a2d5909927df?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTN8MHwxfHNlYXJjaHwxfHx2aW50YWdlJTIwc3RhbXAlMjBwYXNzcG9ydCUyMHRleHR1cmV8ZW58MHx8fHwxNzgxMjEzOTM0fDA&ixlib=rb-4.1.0&q=85",
+        "category": "Texture / Decorative",
+        "description": "Scattered vintage stamps on textured paper, use for backgrounds or opacity overlays"
+      }
+    ],
+    "icons": {
+      "library": "@phosphor-icons/react",
+      "style": "duotone or regular, utilitarian look"
+    }
+  },
+  "testing_guidelines": {
+    "requirements": "All interactive elements (buttons, inputs, links, sliders, tabs) MUST have a data-testid attribute. Use kebab-case and role-based naming (e.g., data-testid='calc-submit-btn', data-testid='style-backpacker-card')."
+  }
+}
