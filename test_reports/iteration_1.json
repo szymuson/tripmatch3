@@ -1,0 +1,30 @@
+{
+  "summary": "Frontend-only homepage testing for vintage travel cost calculator. All major sections render. Calculator interactions (destination dropdown, travelers inc/dec with bounds, style buttons, save toast, 7 breakdown rows) all PASS. Luxury total > Backpacker confirmed ($40,105 vs $16,235 for Tokyo/10 travelers/7n). Nav anchors scroll correctly. Found 2 issues: (1) Destinations budget filter buttons under-2k and 2-5k both return all 8 cards regardless of style=couple totals — filter logic appears broken for those buckets; (2) Footer invalid email submission does not fire sonner error toast because input has type=\"email\" and HTML5 native validation blocks form submission before JS handler runs.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Footer newsletter", "issue": "Invalid email (e.g. 'invalid-email' with no @) does NOT show the sonner error toast 'That doesn\\'t look like an email.' The <input type=\\\"email\\\"> triggers HTML5 native browser validation which prevents form submission, so the JS onSubmit handler never runs the toast.error path. Either change input type to 'text' OR add noValidate to the form OR rely solely on native validation.", "selector": "[data-testid=\"footer-email-input\"]", "priority": "HIGH"},
+      {"component": "Destinations budget filter", "issue": "Budget filter under-2k returns 8 cards (all destinations) and 2-5k also returns 8 cards while 5k-plus returns 2. With style=couple, 7nt/2t the lowest destination total (Bali) is ~$3,016, so under-2k should yield 0 results and show destinations-empty. The buckets under-2k and 2-5k appear to not be filtering correctly — likely the cards count we observed remained at 8 because the filter chips' click did not update state OR boundary math is off. Empty-state DID correctly appear when combining under-2k + luxury filter, so empty path works; bug is specifically in the budget-only flow with style=couple.", "selector": "[data-testid=\"dest-filter-budget-under-2k\"]", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Footer: change <input type=\"email\"> to type=\"text\" or add noValidate to form so the JS toast.error path runs for invalid emails.",
+    "Destinations: verify budget filter under-2k and 2-5k logic; with couple style, no destinations are under $2K but UI still shows all 8 cards. Confirm setBucketId is wired to the chip clicks and that the rows useMemo recomputes."
+  ],
+  "critical_code_review_comments": [
+    "Footer.jsx uses input type=\"email\" which conflicts with custom JS validation — HTML5 will block submit before custom toast.",
+    "Calculator.jsx computeTrip uses Math.ceil(travelers/2) for hotel rooms which is a clever business rule but undocumented — add comment.",
+    "Destinations.jsx budget bucket condition uses inclusive >= min && <= max — overlapping at boundary ($2000 & $5000) could lead to duplicate counting if a destination is exactly on the boundary."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "~85% (10/12 features passing; 2 bugs found)"},
+  "test_credentials": "N/A",
+  "seed_data_creation": "None — all data mocked client-side.",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Re-verify after fixes: (1) invalid email in footer should produce sonner error toast; (2) destinations budget filter under-2k with default couple style should produce 0 cards and show destinations-empty. Use data-testid selectors prefixed with calc-, dest-filter-, footer-. Sonner toasts use [data-sonner-toast] selector. Default Calculator state: Lisbon/couple/7n/2 travelers → $3,138 expected.",
+  "rca_of_the_issue": "Footer bug RCA: <input type='email'> triggers browser-native constraint validation on submit; the browser blocks the submit event when the value is not a valid email format, so the React onSubmit handler never executes the toast.error branch. Fix: use type='text' or add noValidate on the <form>. Destinations RCA: needs main-agent investigation — possibly the budget chip clicks are not flipping bucketId or the useMemo dependency is stale; suggest adding console.log of bucketId on click and verifying rows.length."
+}
