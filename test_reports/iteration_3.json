@@ -1,0 +1,24 @@
+{
+  "summary": "Retest of TripMatch calendar narrow-viewport rule after isNarrow threshold was raised from 760 to 900 in TripMatcher.jsx. All three required viewport rules PASS.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "viewport_retest_results": [
+    {"viewport": "820x900", "expected_months": 1, "actual_months": 1, "popover_bbox": {"left": 67, "right": 747, "width": 680, "vw": 820}, "fits_horizontally": true, "result": "PASS", "notes": "No rdp-multiple_months class; single table renders. Left>=0 and right<=innerWidth."},
+    {"viewport": "1440x900", "expected_months": 2, "actual_months": 2, "popover_bbox": {"left": 667, "right": 1347, "width": 680, "vw": 1440}, "fits_horizontally": true, "result": "PASS", "notes": "rdp-multiple_months class present; two tables (June+July) side by side."},
+    {"viewport": "390x844", "expected_months": 1, "actual_months": 1, "popover_bbox": {"left": 0, "right": 358, "width": 358, "vw": 390}, "fits_horizontally": true, "result": "PASS", "notes": "Single month, popover hugs left edge but does not overflow."}
+  ],
+  "test_note_on_selectors": "Project uses react-day-picker v8 — month caption class is NOT '.rdp-month_caption' (that is v9). Months counted by querying tables inside [data-radix-popper-content-wrapper] and confirming presence/absence of the 'rdp-multiple_months' class.",
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% (3/3 viewport rules pass)"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "The calendar overflow fix (isNarrow threshold = 900 in /app/frontend/src/components/site/TripMatcher.jsx) is verified working at 820x900 (1 month), 1440x900 (2 months), and 390x844 (1 month). If counting months in future tests, use table count inside [data-radix-popper-content-wrapper] OR detect the 'rdp-multiple_months' class — not '.rdp-month_caption' (v9 class, not present in this v8 setup)."
+}

@@ -43,11 +43,11 @@ export const TripMatcher = ({ params, setParams, onSearch }) => {
   const [dateOpen, setDateOpen] = useState(false);
   const [dateRange, setDateRange] = useState(null); // {from, to}
   const [isNarrow, setIsNarrow] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 760 : false
+    typeof window !== "undefined" ? window.innerWidth < 900 : false
   );
 
   React.useEffect(() => {
-    const onResize = () => setIsNarrow(window.innerWidth < 760);
+    const onResize = () => setIsNarrow(window.innerWidth < 900);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -411,13 +411,6 @@ const FormField = ({ label, icon, children }) => (
       {icon} {label}
     </label>
     {children}
-  </div>
-);
-
-const Stat = ({ label, value }) => (
-  <div>
-    <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#695F59]">{label}</div>
-    <div className="font-serif text-3xl font-bold mt-1">{value}</div>
   </div>
 );
 
