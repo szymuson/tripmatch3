@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Navigation } from "../components/site/Navigation";
 import { Footer } from "../components/site/Footer";
-import { StaysPreview } from "../components/site/StaysPreview";
 import { FlightStayPackage } from "../components/site/FlightStayPackage";
 import { PracticalInfo } from "../components/site/PracticalInfo";
 import { TripLedger } from "../components/site/TripLedger";
@@ -89,7 +88,7 @@ const DestinationPage = () => {
               <p className="text-lg text-[#2A2624]/80 mt-6 leading-relaxed max-w-md">{details.blurbLong}</p>
 
               <div className="mt-8 font-mono text-[11px] uppercase tracking-[0.25em] text-[#2D4238]">
-                {score}% match to your filters · <a href="#how-we-calc" className="underline">How we calculate</a>
+                {score}% match to your filters
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-3">
@@ -138,8 +137,7 @@ const DestinationPage = () => {
         </div>
       </section>
 
-      {/* Stays */}
-      <StaysPreview destination={destination} nights={params.nights} selectedStayId={selectedStayId} onSelectStay={setSelectedStayId} />
+      {/* Stays section removed — moved into FlightStayPackage with show-more */}
 
       {/* Attractions */}
       <section className="border-b border-[#2A2624] bg-[#EBE4D8]">
@@ -201,9 +199,9 @@ const DestinationPage = () => {
       {/* Itinerary */}
       <section className="border-b border-[#2A2624] bg-[#EBE4D8]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-24">
-          <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#695F59]">Day ideas in {destination.name}</div>
-          <h2 className="font-serif text-4xl md:text-5xl font-black tracking-tighter mt-3">Not a rigid plan. <span className="italic font-normal">A rhythm.</span></h2>
-          <p className="text-[#2A2624]/80 text-lg mt-3 max-w-2xl">A few simple day shapes that help you connect attractions without sprinting across the city.</p>
+          <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#695F59]">Sample days in {destination.name}</div>
+          <h2 className="font-serif text-4xl md:text-5xl font-black tracking-tighter mt-3">A few ways to <span className="italic font-normal">shape the days.</span></h2>
+          <p className="text-[#2A2624]/80 text-lg mt-3 max-w-2xl">Loose day templates — pick what fits, skip what doesn't. Each block connects the attractions above without sprinting across the city.</p>
 
           <ol className="mt-10 space-y-4">
             {details.itinerary.map((d) => (

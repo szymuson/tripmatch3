@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Plane } from "lucide-react";
 
-const DEFAULT_QUERY =
-  "from=Warsaw&month=September+2026&travelers=2&budget=1500&nights=6&styles=Beach,Food,Culture,City+break";
-
 export const Navigation = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -25,7 +22,6 @@ export const Navigation = () => {
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
       navigate(`/#${anchor}`);
-      // Browser may not auto-scroll on programmatic nav with hash; do it after route mounts
       setTimeout(() => {
         const el = document.getElementById(anchor);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -33,33 +29,9 @@ export const Navigation = () => {
     }
   };
 
-  const goResults = () => {
-    setOpen(false);
-    // If we already have a search, keep it; otherwise default
-    const search = location.search && location.pathname !== "/" ? location.search : `?${DEFAULT_QUERY}`;
-    navigate(`/results${search}`);
-  };
-
-  const goPlanCTA = () => {
-    setOpen(false);
-    if (onHome) {
-      const el = document.getElementById("matcher");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      navigate("/#matcher");
-      setTimeout(() => {
-        const el = document.getElementById("matcher");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 350);
-    }
-  };
-
   const links = [
-    { label: "Calculator", action: () => goAnchor("matcher") },
-    { label: "Destinations", action: goResults },
-    { label: "Styles", action: () => goAnchor("matcher") },
     { label: "How it works", action: () => goAnchor("how") },
-    { label: "Traveler profile", action: () => goAnchor("profile") },
+    { label: "Traveler profile", action: () => { setOpen(false); navigate("/profile"); } },
   ];
 
   return (
@@ -87,7 +59,7 @@ export const Navigation = () => {
           </span>
         </button>
 
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden md:flex items-center gap-7">
           {links.map((l) => (
             <button
               key={l.label}
@@ -100,28 +72,18 @@ export const Navigation = () => {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
-          <button
-            onClick={goPlanCTA}
-            data-testid="nav-cta-plan"
-            className="press-effect inline-block bg-[#C84B31] text-[#F4EFE6] font-mono text-[11px] uppercase tracking-[0.2em] px-5 py-3 shadow-stamp-sm border border-[#2A2624]"
-          >
-            Plan a trip
-          </button>
-        </div>
-
         <button
           aria-label="Toggle menu"
           data-testid="nav-mobile-toggle"
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden w-10 h-10 grid place-items-center border border-[#2A2624] bg-[#EBE4D8]"
+          className="md:hidden w-10 h-10 grid place-items-center border border-[#2A2624] bg-[#EBE4D8]"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-[#2A2624] bg-[#EBE4D8] px-6 py-4 flex flex-col gap-4">
+        <div className="md:hidden border-t border-[#2A2624] bg-[#EBE4D8] px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
             <button
               key={l.label}
@@ -132,13 +94,6 @@ export const Navigation = () => {
               {l.label}
             </button>
           ))}
-          <button
-            onClick={goPlanCTA}
-            data-testid="nav-mobile-cta"
-            className="bg-[#C84B31] text-[#F4EFE6] font-mono text-xs uppercase tracking-[0.2em] px-5 py-3 border border-[#2A2624] text-center shadow-stamp-sm"
-          >
-            Plan a trip
-          </button>
         </div>
       )}
     </header>

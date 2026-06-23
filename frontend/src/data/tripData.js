@@ -9,6 +9,13 @@ export const TRAVEL_STYLES = [
   "Nature",
   "Nightlife",
   "Slow travel",
+  "Romantic",
+  "History",
+  "Mountains",
+  "Photography",
+  "Wellness",
+  "Family-friendly",
+  "Architecture",
 ];
 
 export const MONTHS = [

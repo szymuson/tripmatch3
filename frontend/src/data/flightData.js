@@ -53,29 +53,26 @@ export const PRACTICAL = {
   barcelona: {
     currency: "EUR (€)",
     language: "Catalan & Spanish",
-    plug: "Type C / F · 230V",
     timeZone: "CET · same as Warsaw",
     transitPass: "T-casual · €12.55 / 10 rides",
-    waterTap: "Drinkable but tastes mineral — locals buy bottled",
     bestNeighborhoods: "Gràcia, Born, Poble-sec",
+    safetyNote: "Watch pockets on La Rambla & metro line 3",
   },
   lisbon: {
     currency: "EUR (€)",
     language: "Portuguese",
-    plug: "Type C / F · 230V",
     timeZone: "WET · −1h from Warsaw",
     transitPass: "Viva Viagem · €6 day pass",
-    waterTap: "Drinkable everywhere",
     bestNeighborhoods: "Alfama, Príncipe Real, Graça",
+    safetyNote: "Quiet city — main risk is tram-28 pickpockets",
   },
   budapest: {
     currency: "Hungarian forint (HUF)",
     language: "Hungarian",
-    plug: "Type C / F · 230V",
     timeZone: "CET · same as Warsaw",
     transitPass: "72h pass · ~€14",
-    waterTap: "Drinkable everywhere",
     bestNeighborhoods: "District V, VII, Buda Hills",
+    safetyNote: "Late-night taxi only from official ranks",
   },
 };
 

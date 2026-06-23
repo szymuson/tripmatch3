@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { FLIGHTS, toPLN } from "../../data/flightData";
 import { STAYS, formatEUR } from "../../data/tripData";
-import { Plane, ArrowRight, ExternalLink, Star, BedDouble } from "lucide-react";
+import { Plane, ArrowRight, ExternalLink, Star, BedDouble, ChevronDown } from "lucide-react";
 
 export const FlightStayPackage = ({ destination, params, cost }) => {
   const flight = FLIGHTS[destination.id];
-  const stays = (STAYS[destination.id] || []).slice(0, 2);
-  if (!flight || stays.length === 0) return null;
+  const allStays = STAYS[destination.id] || [];
+  const [showAll, setShowAll] = useState(false);
+  const stays = showAll ? allStays : allStays.slice(0, 2);
+  if (!flight || allStays.length === 0) return null;
 
   const flightTotal = destination.flight * params.travelers;
-  const stayTotal = stays[0].pricePerNight * params.nights;
+  const stayTotal = allStays[0].pricePerNight * params.nights;
 
   return (
     <section className="border-b border-[#2A2624] bg-[#F4EFE6]">
@@ -110,7 +112,7 @@ export const FlightStayPackage = ({ destination, params, cost }) => {
             <div className="mt-5 grid sm:grid-cols-2 gap-4">
               {stays.map((s, i) => {
                 const total = s.pricePerNight * params.nights;
-                const badge = i === 0 ? "TripMatch pick" : "Near metro";
+                const badge = i === 0 ? "TripMatch pick" : i === 1 ? "Near metro" : "Best price";
                 return (
                   <article
                     key={s.id}
@@ -161,6 +163,20 @@ export const FlightStayPackage = ({ destination, params, cost }) => {
                 );
               })}
             </div>
+
+            {allStays.length > 2 && (
+              <div className="mt-4 flex justify-center">
+                <button
+                  type="button"
+                  data-testid="flight-stay-show-more"
+                  onClick={() => setShowAll((v) => !v)}
+                  className="press-effect inline-flex items-center gap-2 bg-[#F4EFE6] text-[#2A2624] font-mono text-[11px] uppercase tracking-[0.2em] px-4 py-2.5 border border-[#2A2624] shadow-stamp-sm"
+                >
+                  {showAll ? "Show fewer stays" : `Show ${allStays.length - 2} more stays matching your filters`}
+                  <ChevronDown size={13} className={showAll ? "rotate-180 transition-transform" : "transition-transform"} />
+                </button>
+              </div>
+            )}
 
             {/* Package summary */}
             <div className="mt-5 bg-[#2D4238] text-[#F4EFE6] border border-[#2A2624] p-4 flex flex-wrap items-baseline justify-between gap-3">

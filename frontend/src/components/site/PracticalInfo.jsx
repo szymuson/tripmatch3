@@ -3,10 +3,9 @@ import { PRACTICAL, SEASONS } from "../../data/flightData";
 import {
   Banknote,
   Languages,
-  Plug,
   Clock3,
   Train,
-  Droplet,
+  Shield,
   Compass,
 } from "lucide-react";
 
@@ -20,11 +19,10 @@ export const PracticalInfo = ({ destination }) => {
   const items = [
     { Icon: Banknote, label: "Currency", value: p.currency },
     { Icon: Languages, label: "Language", value: p.language },
-    { Icon: Plug, label: "Power", value: p.plug },
     { Icon: Clock3, label: "Time zone", value: p.timeZone },
     { Icon: Train, label: "Transit pass", value: p.transitPass },
-    { Icon: Droplet, label: "Tap water", value: p.waterTap },
     { Icon: Compass, label: "Best base areas", value: p.bestNeighborhoods },
+    { Icon: Shield, label: "Safety note", value: p.safetyNote },
   ];
 
   return (

@@ -4,11 +4,12 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { Navigation } from "@/components/site/Navigation";
 import { TripMatcher } from "@/components/site/TripMatcher";
-import { TravelerProfile } from "@/components/site/TravelerProfile";
+import { FeaturedTrips } from "@/components/site/FeaturedTrips";
 import { HowItWorks } from "@/components/site/HowItWorks";
 import { Footer } from "@/components/site/Footer";
 import ResultsPage from "@/pages/ResultsPage";
 import DestinationPage from "@/pages/DestinationPage";
+import ProfilePage from "@/pages/ProfilePage";
 
 const Home = () => {
   const [params, setParams] = useState({
@@ -18,6 +19,10 @@ const Home = () => {
     budget: 1500,
     nights: 6,
     styles: ["Beach", "Food", "Culture", "City break"],
+    flexibleDates: true,
+    pace: "balanced",
+    withKids: false,
+    nearCenter: false,
   });
   const navigate = useNavigate();
 
@@ -37,8 +42,8 @@ const Home = () => {
     <main data-testid="home-root" className="min-h-screen bg-[#F4EFE6] text-[#2A2624]">
       <Navigation />
       <TripMatcher params={params} setParams={setParams} onSearch={handleSearch} />
+      <FeaturedTrips />
       <HowItWorks />
-      <TravelerProfile />
       <Footer />
     </main>
   );
@@ -52,6 +57,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/trip/:id" element={<DestinationPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
       <Toaster
