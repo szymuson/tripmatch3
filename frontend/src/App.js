@@ -3,6 +3,7 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { Navigation } from "@/components/site/Navigation";
+import { MyTrips } from "@/components/site/MyTrips";
 import { TripMatcher } from "@/components/site/TripMatcher";
 import { FeaturedTrips } from "@/components/site/FeaturedTrips";
 import { HowItWorks } from "@/components/site/HowItWorks";
@@ -41,6 +42,7 @@ const Home = () => {
   return (
     <main data-testid="home-root" className="min-h-screen bg-[#F4EFE6] text-[#2A2624]">
       <Navigation />
+      <MyTrips />
       <TripMatcher params={params} setParams={setParams} onSearch={handleSearch} />
       <FeaturedTrips />
       <HowItWorks />

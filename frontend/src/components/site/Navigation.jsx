@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Plane } from "lucide-react";
+import { Menu, X, Plane, User } from "lucide-react";
 
 export const Navigation = () => {
   const [open, setOpen] = useState(false);
@@ -33,6 +33,8 @@ export const Navigation = () => {
     { label: "How it works", action: () => goAnchor("how") },
     { label: "Traveler profile", action: () => { setOpen(false); navigate("/profile"); } },
   ];
+
+  const goProfile = () => { setOpen(false); navigate("/profile"); };
 
   return (
     <header
@@ -70,6 +72,15 @@ export const Navigation = () => {
               {l.label}
             </button>
           ))}
+          <button
+            onClick={goProfile}
+            data-testid="nav-profile-icon"
+            aria-label="Open profile"
+            title="Open profile · login coming soon"
+            className="press-effect w-10 h-10 grid place-items-center border border-[#2A2624] bg-[#EBE4D8] shadow-stamp-sm hover:bg-[#2A2624] hover:text-[#F4EFE6] transition-colors"
+          >
+            <User size={16} strokeWidth={1.8} />
+          </button>
         </nav>
 
         <button

@@ -42,6 +42,15 @@ export const TripMatcher = ({ params, setParams, onSearch }) => {
   const [fromOpen, setFromOpen] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
   const [dateRange, setDateRange] = useState(null); // {from, to}
+  const [isNarrow, setIsNarrow] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 760 : false
+  );
+
+  React.useEffect(() => {
+    const onResize = () => setIsNarrow(window.innerWidth < 760);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const filteredCities = CITY_SUGGESTIONS.filter((c) =>
     c.toLowerCase().includes((params.from || "").toLowerCase()) && c !== params.from
@@ -116,11 +125,6 @@ export const TripMatcher = ({ params, setParams, onSearch }) => {
           <p data-testid="matcher-sub" className="mt-8 text-lg md:text-xl text-[#2A2624]/80 leading-relaxed max-w-md">
             Flights, stays, food, attractions and local transport — calculated together. No tab-juggling. No surprises at checkout.
           </p>
-          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[#2A2624] pt-6 max-w-md">
-            <Stat label="Components" value="5" />
-            <Stat label="Cities" value="120+" />
-            <Stat label="Styles" value={String(TRAVEL_STYLES.length)} />
-          </div>
         </div>
 
         {/* FORM */}
@@ -198,13 +202,17 @@ export const TripMatcher = ({ params, setParams, onSearch }) => {
                       <button
                         type="button"
                         data-testid="matcher-when-trigger"
-                        className="flex-1 text-left font-serif text-2xl md:text-3xl font-bold tracking-tight inline-flex items-center gap-2"
+                        className="flex-1 text-left font-serif text-2xl md:text-3xl font-bold tracking-tight inline-flex items-center gap-2 min-w-0"
                       >
                         <span className="truncate">{dateButtonLabel()}</span>
                         <ChevronDown size={16} className="shrink-0 opacity-60" />
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent className="rounded-none p-0 bg-[#F4EFE6] border-[#2A2624] w-auto">
+                    <PopoverContent
+                      align="end"
+                      sideOffset={8}
+                      className="rounded-none p-0 bg-[#F4EFE6] border-[#2A2624] w-[min(680px,calc(100vw-32px))] max-w-[calc(100vw-32px)] overflow-hidden shadow-stamp-lg"
+                    >
                       <div className="p-3 border-b border-[#2A2624]/30 flex items-center justify-between gap-3">
                         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#695F59]">
                           Pick a range
@@ -222,13 +230,15 @@ export const TripMatcher = ({ params, setParams, onSearch }) => {
                           Use flexible month
                         </button>
                       </div>
-                      <Calendar
-                        mode="range"
-                        numberOfMonths={2}
-                        selected={dateRange}
-                        onSelect={onPickRange}
-                        className="rounded-none"
-                      />
+                      <div className="overflow-x-auto max-w-full">
+                        <Calendar
+                          mode="range"
+                          numberOfMonths={isNarrow ? 1 : 2}
+                          selected={dateRange}
+                          onSelect={onPickRange}
+                          className="rounded-none"
+                        />
+                      </div>
                     </PopoverContent>
                   </Popover>
                 </div>

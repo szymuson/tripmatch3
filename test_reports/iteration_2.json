@@ -1,0 +1,33 @@
+{
+  "summary": "Frontend-only verification of TripMatch calendar overflow fix, MyTrips dashboard, Navigation profile icon, expanded Traveler Profile, and stats-grid removal. 9 out of 10 spec requirements pass. One regression of test-spec at narrow viewport (820px) — calendar still shows 2 months because the isNarrow threshold is < 760 (not <= 820 as implied by test spec).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "TripMatcher Calendar",
+        "issue": "At narrow viewport 820x900 the calendar popover still renders TWO months (June + July). Test spec requires a SINGLE month at narrow viewports. The current breakpoint is window.innerWidth < 760, so 820 doesn't trigger the collapse. The popover itself does NOT overflow horizontally (x=67, right=747, vw=820), so the overflow bug fix is verified. Only the responsive month-count rule fails.",
+        "selector": "[data-radix-popper-content-wrapper] .rdp-month_caption (count=2 at vw=820)",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "In /app/frontend/src/components/site/TripMatcher.jsx raise the isNarrow threshold from 760 to a value >= 820 (e.g., window.innerWidth < 900) so that a single-month calendar is shown at typical tablet/narrow desktop sizes per the spec. Both the initial useState and the resize listener need to be updated."
+  ],
+  "critical_code_review_comments": [
+    "TripMatcher.jsx: numberOfMonths breakpoint (760) is below the spec's narrow viewport (820), causing the calendar to still render 2 months at 820px. Raise the threshold.",
+    "TripMatcher.jsx: unused `Stat` helper component is defined but never used (dead code after stats-grid removal). Safe to delete.",
+    "MyTrips.jsx: SEED_SAVED / SEED_ALERT / SEED_WATCH are duplicated conceptually with TravelerProfile.jsx mock arrays — consider centralising into tripData.js for a single source of truth."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "90%"},
+  "test_credentials": "None required (no auth, all data mocked)",
+  "seed_data_creation": "None",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All spec items verified at 1440x900 desktop: popover x=667 w=680 right=1347 (no overflow), range selection produces 'DD Mon YYYY → DD Mon YYYY' label, nights updates to 6, flexible toggle closes popover and label contains 'flexible'. MyTrips section sits above the form (y=73 vs 686). nav-profile-icon navigates to /profile. mytrips-resume-barcelona navigates to /trip/barcelona with full query string. Profile page exposes 3 saved / 3 alerts / 4 watch / 3 friends and a disabled profile-group-cta. No Calculator/Styles/Destinations/Plan-a-trip strings in header. Stats grid (Cities/120+) removed from home. The only failing requirement is the narrow-viewport single-month rule at 820px — root cause: isNarrow threshold 760 < 820.",
+  "rca_of_the_issue": "Reproduction: open / at viewport 820x900, click [data-testid=matcher-when-trigger], inspect [data-radix-popper-content-wrapper] — two rdp-month_caption nodes are present (June 2026 and July 2026). Root cause: TripMatcher.jsx line 45-47 + line 50 use `window.innerWidth < 760` to set isNarrow, then numberOfMonths={isNarrow ? 1 : 2}. At 820 isNarrow=false. Mitigation: change the threshold to a value >= 820 (e.g., 900 or 880) so that the 820 viewport collapses to a single month, while still showing 2 months on full desktop widths (1024+)."
+}
