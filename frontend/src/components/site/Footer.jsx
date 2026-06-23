@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { Mail, ArrowRight, Compass } from "lucide-react";
+import { Mail, ArrowRight, Plane } from "lucide-react";
 
 export const Footer = () => {
   const [email, setEmail] = useState("");
@@ -12,16 +12,13 @@ export const Footer = () => {
       return;
     }
     toast.success("Sealed and sent.", {
-      description: "We'll send you one beautifully composed postcard each month.",
+      description: "We'll send you one beautifully composed dispatch each month.",
     });
     setEmail("");
   };
 
   return (
-    <footer
-      data-testid="footer-root"
-      className="bg-[#2D4238] text-[#F4EFE6]"
-    >
+    <footer data-testid="footer-root" className="bg-[#2D4238] text-[#F4EFE6]">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
         <div className="grid lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-7">
@@ -37,7 +34,7 @@ export const Footer = () => {
             >
               Travel,
               <br />
-              <span className="italic font-normal">truthfully</span> told.
+              <span className="italic font-normal">truthfully</span> matched.
             </h2>
           </div>
 
@@ -48,10 +45,10 @@ export const Footer = () => {
             className="lg:col-span-5 bg-[#F4EFE6] text-[#2A2624] p-6 md:p-8 border border-[#E3A72F] shadow-stamp"
           >
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#695F59] mb-3">
-              Telegram form · One postcard per month
+              Dispatch form · One letter per month
             </div>
             <label htmlFor="footer-email" className="font-serif text-2xl block">
-              Your address, traveler.
+              Where shall we send the matches?
             </label>
             <div className="flex items-center gap-3 border-b-2 border-[#2A2624] mt-4 pb-2">
               <Mail size={16} />
@@ -80,36 +77,41 @@ export const Footer = () => {
 
         <div className="mt-20 pt-8 border-t border-[#F4EFE6]/30 grid md:grid-cols-3 gap-8 items-start">
           <div className="flex items-center gap-3">
-            <span className="w-9 h-9 grid place-items-center bg-[#F4EFE6] text-[#2D4238]">
-              <Compass size={18} strokeWidth={2} />
+            <span className="w-9 h-9 grid place-items-center bg-[#F4EFE6] text-[#2D4238] -rotate-12">
+              <Plane size={18} strokeWidth={2} />
             </span>
             <div>
               <div className="font-serif text-xl font-bold">
-                Coût<span className="text-[#E3A72F]">.</span>
+                Trip<span className="text-[#E3A72F]">Match</span>
+                <span className="text-[#E3A72F]">.</span>
               </div>
               <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#F4EFE6]/70">
-                The honest travel ledger
+                Trips that fit your real budget
               </div>
             </div>
           </div>
 
           <nav className="flex flex-wrap gap-x-6 gap-y-2">
-            {["Calculator", "Styles", "Destinations", "How it works", "About"].map(
-              (l) => (
-                <a
-                  key={l}
-                  href={`#${l.toLowerCase().replace(/\s+/g, "")}`}
-                  data-testid={`footer-link-${l.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="font-mono text-[11px] uppercase tracking-[0.2em] hover:text-[#E3A72F]"
-                >
-                  {l}
-                </a>
-              )
-            )}
+            {[
+              { l: "Calculator", h: "#matcher" },
+              { l: "Destinations", h: "#results" },
+              { l: "Styles", h: "#matcher" },
+              { l: "How it works", h: "#how" },
+              { l: "Profile", h: "#profile" },
+            ].map(({ l, h }) => (
+              <a
+                key={l}
+                href={h}
+                data-testid={`footer-link-${l.toLowerCase().replace(/\s+/g, "-")}`}
+                className="font-mono text-[11px] uppercase tracking-[0.2em] hover:text-[#E3A72F]"
+              >
+                {l}
+              </a>
+            ))}
           </nav>
 
           <div className="md:text-right font-mono text-[10px] uppercase tracking-[0.25em] text-[#F4EFE6]/70">
-            © 2026 Coût Editions · Printed in cream and terracotta · USD ledger
+            © 2026 TripMatch · Cream paper, terracotta ink · EUR ledger
           </div>
         </div>
       </div>
