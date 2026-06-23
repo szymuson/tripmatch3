@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Plane } from "lucide-react";
+
+const DEFAULT_QUERY =
+  "from=Warsaw&month=September+2026&travelers=2&budget=1500&nights=6&styles=Beach,Food,Culture,City+break";
 
 export const Navigation = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const onHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -11,12 +18,48 @@ export const Navigation = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const goAnchor = (anchor) => {
+    setOpen(false);
+    if (onHome) {
+      const el = document.getElementById(anchor);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      navigate(`/#${anchor}`);
+      // Browser may not auto-scroll on programmatic nav with hash; do it after route mounts
+      setTimeout(() => {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 350);
+    }
+  };
+
+  const goResults = () => {
+    setOpen(false);
+    // If we already have a search, keep it; otherwise default
+    const search = location.search && location.pathname !== "/" ? location.search : `?${DEFAULT_QUERY}`;
+    navigate(`/results${search}`);
+  };
+
+  const goPlanCTA = () => {
+    setOpen(false);
+    if (onHome) {
+      const el = document.getElementById("matcher");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      navigate("/#matcher");
+      setTimeout(() => {
+        const el = document.getElementById("matcher");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 350);
+    }
+  };
+
   const links = [
-    { label: "Calculator", href: "#matcher" },
-    { label: "Destinations", href: "#results" },
-    { label: "Styles", href: "#matcher" },
-    { label: "How it works", href: "#how" },
-    { label: "Traveler profile", href: "#profile" },
+    { label: "Calculator", action: () => goAnchor("matcher") },
+    { label: "Destinations", action: goResults },
+    { label: "Styles", action: () => goAnchor("matcher") },
+    { label: "How it works", action: () => goAnchor("how") },
+    { label: "Traveler profile", action: () => goAnchor("profile") },
   ];
 
   return (
@@ -27,7 +70,11 @@ export const Navigation = () => {
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between gap-6">
-        <a href="#top" data-testid="nav-logo" className="flex items-center gap-2 shrink-0">
+        <button
+          onClick={() => navigate("/")}
+          data-testid="nav-logo"
+          className="flex items-center gap-2 shrink-0"
+        >
           <span className="w-9 h-9 grid place-items-center bg-[#2A2624] text-[#F4EFE6] -rotate-12">
             <Plane size={18} strokeWidth={2} />
           </span>
@@ -38,29 +85,29 @@ export const Navigation = () => {
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#695F59] ml-2 hidden md:inline">
             Real budget · real trips
           </span>
-        </a>
+        </button>
 
         <nav className="hidden lg:flex items-center gap-7">
           {links.map((l) => (
-            <a
+            <button
               key={l.label}
-              href={l.href}
+              onClick={l.action}
               data-testid={`nav-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
               className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#2A2624] hover:text-[#C84B31] transition-colors"
             >
               {l.label}
-            </a>
+            </button>
           ))}
         </nav>
 
         <div className="hidden lg:block">
-          <a
-            href="#matcher"
+          <button
+            onClick={goPlanCTA}
             data-testid="nav-cta-plan"
             className="press-effect inline-block bg-[#C84B31] text-[#F4EFE6] font-mono text-[11px] uppercase tracking-[0.2em] px-5 py-3 shadow-stamp-sm border border-[#2A2624]"
           >
             Plan a trip
-          </a>
+          </button>
         </div>
 
         <button
@@ -76,24 +123,22 @@ export const Navigation = () => {
       {open && (
         <div className="lg:hidden border-t border-[#2A2624] bg-[#EBE4D8] px-6 py-4 flex flex-col gap-4">
           {links.map((l) => (
-            <a
+            <button
               key={l.label}
-              href={l.href}
-              onClick={() => setOpen(false)}
+              onClick={l.action}
               data-testid={`nav-mobile-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
-              className="font-mono text-xs uppercase tracking-[0.2em]"
+              className="text-left font-mono text-xs uppercase tracking-[0.2em]"
             >
               {l.label}
-            </a>
+            </button>
           ))}
-          <a
-            href="#matcher"
-            onClick={() => setOpen(false)}
+          <button
+            onClick={goPlanCTA}
             data-testid="nav-mobile-cta"
             className="bg-[#C84B31] text-[#F4EFE6] font-mono text-xs uppercase tracking-[0.2em] px-5 py-3 border border-[#2A2624] text-center shadow-stamp-sm"
           >
             Plan a trip
-          </a>
+          </button>
         </div>
       )}
     </header>

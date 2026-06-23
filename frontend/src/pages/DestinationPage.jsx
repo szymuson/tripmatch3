@@ -3,6 +3,8 @@ import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Navigation } from "../components/site/Navigation";
 import { Footer } from "../components/site/Footer";
 import { StaysPreview } from "../components/site/StaysPreview";
+import { FlightStayPackage } from "../components/site/FlightStayPackage";
+import { PracticalInfo } from "../components/site/PracticalInfo";
 import { TripLedger } from "../components/site/TripLedger";
 import { BoardingPass } from "../components/site/BoardingPass";
 import {
@@ -120,6 +122,9 @@ const DestinationPage = () => {
         </div>
       </section>
 
+      {/* Flight + stay package — like the screenshot */}
+      <FlightStayPackage destination={destination} params={params} cost={cost} />
+
       {/* For whom */}
       <section className="border-b border-[#2A2624] bg-[#EBE4D8]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-20">
@@ -213,6 +218,9 @@ const DestinationPage = () => {
           </ol>
         </div>
       </section>
+
+      {/* Practical info + season heatmap */}
+      <PracticalInfo destination={destination} />
 
       {/* Ledger + Boarding pass at the end */}
       <TripLedger destination={destination} cost={cost} budget={params.budget} />
