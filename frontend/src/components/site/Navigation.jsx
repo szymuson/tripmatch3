@@ -30,6 +30,7 @@ export const Navigation = () => {
   };
 
   const links = [
+    { label: "Destinations", action: () => goAnchor("additional-destinations") },
     { label: "How it works", action: () => goAnchor("how") },
     { label: "Traveler profile", action: () => { setOpen(false); navigate("/profile"); } },
   ];

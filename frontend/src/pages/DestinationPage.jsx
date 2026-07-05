@@ -6,6 +6,7 @@ import { FlightStayPackage } from "../components/site/FlightStayPackage";
 import { PracticalInfo } from "../components/site/PracticalInfo";
 import { TripLedger } from "../components/site/TripLedger";
 import { BoardingPass } from "../components/site/BoardingPass";
+import { UnsplashImage } from "../components/site/UnsplashImage";
 import {
   DESTINATIONS,
   STAYS,
@@ -14,7 +15,7 @@ import {
   formatEUR,
 } from "../data/tripData";
 import { CITY_DETAILS } from "../data/cityDetails";
-import { ArrowLeft, CheckCircle2, AlertTriangle, Plus, Check, Clock, Ticket } from "lucide-react";
+import { ArrowLeft, CheckCircle2, AlertTriangle, Plus, Check, Clock, Ticket, ChevronDown } from "lucide-react";
 
 const parseParams = (sp) => ({
   from: sp.get("from") || "Warsaw",
@@ -24,6 +25,116 @@ const parseParams = (sp) => ({
   nights: parseInt(sp.get("nights") || "6", 10),
   styles: (sp.get("styles") || "Beach,Food,Culture,City break").split(",").filter(Boolean),
 });
+
+const BARCELONA_REJECT_OTHER_ICONS = [
+  "sagrada familia",
+  "park guell",
+  "casa batllo",
+  "boqueria",
+  "barceloneta",
+  "port vell",
+  "montjuic",
+  "tibidabo",
+];
+
+const BARCELONA_ATTRACTION_PHOTOS = {
+  "barcelona-sagrada-familia": {
+    query: "La Sagrada Familia Barcelona architecture",
+    selector: {
+      required: ["sagrada", "familia"],
+      preferred: ["basilica", "gaudi", "church", "holy family", "barcelona"],
+      rejected: [...BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "sagrada familia"), "statue", "close up"],
+    },
+  },
+  "barcelona-park-guell": {
+    query: "Parc Guell Barcelona Gaudi architecture",
+    selector: {
+      required: ["park", "guell"],
+      preferred: ["gaudi", "mosaic", "terrace", "tiled roof", "bench", "barcelona"],
+      rejected: [...BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "park guell"), "inflatable", "ring", "skyscraper"],
+    },
+  },
+  "barcelona-gothic-quarter": {
+    query: "Gothic Quarter Barcelona old town streets",
+    selector: {
+      required: ["barcelona"],
+      preferred: ["gothic", "quarter", "barri gotic", "old town", "cathedral", "street"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS,
+    },
+  },
+  "barcelona-casa-batllo": {
+    query: "Casa Batllo Barcelona",
+    selector: {
+      required: ["casa", "batllo"],
+      preferred: ["facade", "gaudi", "architecture", "building", "tree", "front", "barcelona"],
+      rejected: [...BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "casa batllo"), "casa mila", "roof tiles", "clock"],
+    },
+  },
+  "barcelona-la-boqueria": {
+    query: "Mercat de la Boqueria Barcelona market",
+    selector: {
+      required: ["boqueria"],
+      preferred: ["mercat", "market", "food", "barcelona"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "boqueria"),
+    },
+  },
+  "barcelona-barceloneta-beach": {
+    query: "Barceloneta beach Barcelona",
+    selector: {
+      required: ["barcelona"],
+      preferred: ["barceloneta", "beach", "port vell", "waterfront", "sea", "marina"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "barceloneta" && term !== "port vell"),
+    },
+  },
+  "barcelona-bunkers-del-carmel": {
+    query: "Barcelona city viewpoint Carmel",
+    selector: {
+      required: ["barcelona"],
+      preferred: ["bunkers", "carmel", "viewpoint", "panorama", "sunset"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS,
+    },
+  },
+  "barcelona-montjuic-castle": {
+    query: "Montjuic Castle Barcelona fortress",
+    selector: {
+      required: ["montjuic"],
+      preferred: ["castle", "fortress", "barcelona", "hill"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "montjuic"),
+    },
+  },
+  "barcelona-picasso-museum": {
+    query: "Museu Picasso Barcelona museum exterior",
+    selector: {
+      required: ["picasso"],
+      preferred: ["museum", "museu", "barcelona", "art"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS,
+    },
+  },
+  "barcelona-palau-de-la-musica-catalana": {
+    query: "Palau de la Musica Catalana Barcelona concert hall",
+    selector: {
+      required: ["palau"],
+      preferred: ["musica", "catalana", "concert", "interior", "barcelona"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS,
+    },
+  },
+  "barcelona-tibidabo": {
+    query: "Tibidabo Barcelona church amusement park",
+    selector: {
+      required: ["tibidabo"],
+      preferred: ["church", "amusement", "view", "barcelona"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS.filter((term) => term !== "tibidabo"),
+    },
+  },
+  "barcelona-el-born": {
+    query: "El Born Barcelona neighborhood street",
+    selector: {
+      required: ["barcelona"],
+      preferred: ["el born", "born", "neighborhood", "street", "bar", "boutique"],
+      rejected: BARCELONA_REJECT_OTHER_ICONS,
+    },
+  },
+};
 
 const DestinationPage = () => {
   const { id } = useParams();
@@ -35,6 +146,7 @@ const DestinationPage = () => {
 
   const [selectedStayId, setSelectedStayId] = useState((STAYS[id] || [])[0]?.id || null);
   const [planSet, setPlanSet] = useState(new Set(details?.attractions.map((a) => a.id) || []));
+  const [showAllExtra, setShowAllExtra] = useState(false);
 
   if (!destination || !details) {
     return (
@@ -62,6 +174,8 @@ const DestinationPage = () => {
   };
 
   const stays = STAYS[id] || [];
+  const visibleExtra = showAllExtra ? details.extra : details.extra.slice(0, 2);
+  const useBarcelonaPhotos = destination.id === "barcelona";
 
   return (
     <main className="min-h-screen bg-[#F4EFE6] text-[#2A2624]">
@@ -113,7 +227,18 @@ const DestinationPage = () => {
             <div className="lg:col-span-7">
               <div className="bg-[#EBE4D8] border border-[#2A2624] shadow-stamp-lg p-3">
                 <div className="border border-[#2A2624]/40 p-1">
-                  <img src={destination.image} alt={destination.name} className="w-full aspect-[16/11] object-cover" />
+                  <UnsplashImage
+                    imageKey={`city:${destination.id}:detail-hero`}
+                    query={`${destination.name} ${destination.country} travel`}
+                    fallbackSrc={destination.image}
+                    alt={destination.name}
+                    containerClassName="relative w-full aspect-[16/11]"
+                    className="w-full h-full object-cover"
+                    width={1300}
+                    height={894}
+                    candidateCount={12}
+                    enabled={useBarcelonaPhotos}
+                  />
                 </div>
               </div>
             </div>
@@ -147,21 +272,56 @@ const DestinationPage = () => {
             The places that <span className="italic font-normal">make the trip.</span>
           </h2>
           <p className="text-[#2A2624]/80 text-lg mt-3 max-w-2xl">
-            Mark what you want in. Each selection updates the attraction cost and your full trip total.
+            Mark what you want in. Prices are planning estimates, not guaranteed live ticket prices.
           </p>
 
           <div className="mt-10 space-y-5">
             {details.attractions.map((a) => (
-              <AttractionRow key={a.id} a={a} inPlan={planSet.has(a.id)} onToggle={() => togglePlan(a.id)} />
+              <AttractionRow
+                key={a.id}
+                a={a}
+                inPlan={planSet.has(a.id)}
+                onToggle={() => togglePlan(a.id)}
+                photoQuery={BARCELONA_ATTRACTION_PHOTOS[a.id]?.query || `${a.name} ${destination.name} attraction travel`}
+                photoSelector={BARCELONA_ATTRACTION_PHOTOS[a.id]?.selector}
+                photoKey={`attraction:${a.id}`}
+                photoEnabled={useBarcelonaPhotos}
+                fallbackImage={destination.image}
+              />
             ))}
           </div>
 
           <div className="mt-12 font-mono text-[11px] uppercase tracking-[0.3em] text-[#695F59]">More places, if you have time</div>
           <div className="mt-4 grid md:grid-cols-2 gap-5">
-            {details.extra.map((a) => (
-              <AttractionRow key={a.id} a={a} inPlan={planSet.has(a.id)} onToggle={() => togglePlan(a.id)} compact />
+            {visibleExtra.map((a) => (
+              <AttractionRow
+                key={a.id}
+                a={a}
+                inPlan={planSet.has(a.id)}
+                onToggle={() => togglePlan(a.id)}
+                compact
+                photoQuery={BARCELONA_ATTRACTION_PHOTOS[a.id]?.query || `${a.name} ${destination.name} attraction travel`}
+                photoSelector={BARCELONA_ATTRACTION_PHOTOS[a.id]?.selector}
+                photoKey={`attraction:${a.id}`}
+                photoEnabled={useBarcelonaPhotos}
+                fallbackImage={destination.image}
+              />
             ))}
           </div>
+
+          {details.extra.length > 2 && (
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                data-testid="destination-extra-show-more"
+                onClick={() => setShowAllExtra((v) => !v)}
+                className="press-effect inline-flex items-center gap-2 bg-[#2A2624] text-[#F4EFE6] font-mono text-[11px] uppercase tracking-[0.2em] px-5 py-3 border border-[#2A2624] shadow-stamp-sm"
+              >
+                {showAllExtra ? "Show fewer additional places" : `Show more additional places (${details.extra.length - 2})`}
+                <ChevronDown size={14} className={showAllExtra ? "rotate-180 transition-transform" : "transition-transform"} />
+              </button>
+            </div>
+          )}
 
           <div className="mt-10 bg-[#F4EFE6] border border-[#2A2624] shadow-stamp-sm p-6 grid sm:grid-cols-3 gap-4">
             <Card label="Picked experiences"><div className="font-serif text-3xl font-bold">{planSet.size}</div></Card>
@@ -243,48 +403,119 @@ const InfoBlock = ({ title, body }) => (
   </div>
 );
 
-const AttractionRow = ({ a, inPlan, onToggle, compact }) => (
-  <article className="bg-[#F4EFE6] border border-[#2A2624] shadow-stamp-sm overflow-hidden grid md:grid-cols-[280px_1fr]">
-    {a.image && !compact ? (
-      <div className="aspect-[4/3] md:aspect-auto overflow-hidden border-b md:border-b-0 md:border-r border-[#2A2624]">
-        <img src={a.image} alt={a.name} className="w-full h-full object-cover" />
-      </div>
-    ) : (
-      <div className="hidden md:block bg-[#EBE4D8] border-r border-[#2A2624] p-6">
-        <div className="font-serif text-4xl font-black text-[#C84B31]/40">{a.name.charAt(0)}</div>
-      </div>
-    )}
-    <div className="p-5 md:p-6">
-      <div className="flex items-start justify-between gap-4">
-        <h3 className="font-serif text-2xl font-bold leading-tight">{a.name}</h3>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] bg-[#2D4238] text-[#F4EFE6] px-2 py-1 shrink-0">{a.tag}</span>
-      </div>
-      <p className="text-sm text-[#2A2624]/85 mt-3 leading-relaxed">{a.note}</p>
+const AttractionRow = ({ a, inPlan, onToggle, compact, photoKey, photoQuery, photoSelector, photoEnabled = false, fallbackImage }) => {
+  const ticketLabel = a.ctaLabel === "Check tickets" ? "View tickets" : "Tickets coming soon";
+  const shouldShowPhoto = photoEnabled || (a.image && !compact);
+  const imageFallback = a.image || fallbackImage;
 
-      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 border-t border-[#2A2624]/30 pt-4">
-        <Meta label="Price / pers." value={a.price} />
-        <Meta label="Time" value={a.time} icon={<Clock size={11}/>} />
-        <Meta label="Booking" value={a.booking} />
-        <Meta label="Good if" value={a.good} />
-      </div>
+  return (
+    <article className="bg-[#F4EFE6] border border-[#2A2624] shadow-stamp-sm overflow-hidden grid md:grid-cols-[280px_1fr]">
+      {shouldShowPhoto ? (
+        <div className="aspect-[4/3] md:aspect-auto overflow-hidden border-b md:border-b-0 md:border-r border-[#2A2624]">
+          <UnsplashImage
+            imageKey={photoKey}
+            query={photoQuery}
+            fallbackSrc={imageFallback}
+            alt={a.name}
+            containerClassName="relative w-full h-full"
+            className="object-cover object-center"
+            width={760}
+            height={570}
+            fit="crop"
+            candidateCount={photoEnabled ? 12 : 1}
+            selector={photoSelector}
+            enabled={photoEnabled}
+          />
+        </div>
+      ) : (
+        <div className="hidden md:block bg-[#EBE4D8] border-r border-[#2A2624] p-6">
+          <div className="font-serif text-4xl font-black text-[#C84B31]/40">{a.name.charAt(0)}</div>
+          {a.category && (
+            <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#695F59] mt-4 leading-relaxed">
+              {a.category}
+            </div>
+          )}
+        </div>
+      )}
+      <div className="p-5 md:p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="font-serif text-2xl font-bold leading-tight">{a.name}</h3>
+            {a.category && (
+              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#695F59] mt-1">
+                {a.category}
+              </div>
+            )}
+          </div>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] bg-[#2D4238] text-[#F4EFE6] px-2 py-1 shrink-0">{a.tag}</span>
+        </div>
 
-      <div className="mt-5 flex flex-wrap gap-2">
-        <button
-          onClick={onToggle}
-          className={`press-effect inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] px-4 py-2.5 border border-[#2A2624] shadow-stamp-sm ${inPlan ? "bg-[#2A2624] text-[#F4EFE6]" : "bg-[#F4EFE6] text-[#2A2624]"}`}
-        >
-          {inPlan ? <><Check size={13}/> In plan</> : <><Plus size={13}/> Add to plan</>}
-        </button>
-        <button
-          disabled
-          className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] px-4 py-2.5 border border-[#2A2624]/40 text-[#695F59] bg-[#F4EFE6] cursor-not-allowed"
-        >
-          <Ticket size={13}/> Tickets soon
-        </button>
+        <p className="text-sm text-[#2A2624]/85 mt-3 leading-relaxed">{a.description || a.note}</p>
+        {a.whatYouActuallyDo && (
+          <p className="text-sm text-[#2A2624]/75 mt-2 leading-relaxed">
+            <span className="font-semibold">What you actually do:</span> {a.whatYouActuallyDo}
+          </p>
+        )}
+
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3 border-t border-[#2A2624]/30 pt-4">
+          <Meta label="Price / pers." value={a.price} />
+          <Meta label="Time" value={a.time} icon={<Clock size={11}/>} />
+          <Meta label="Booking" value={a.booking} />
+          <Meta label="Good for" value={a.good} />
+        </div>
+
+        <div className="mt-4 bg-[#EBE4D8] border border-[#2A2624]/50 p-4">
+          <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#695F59]">
+            Estimated planning price
+          </div>
+          <p className="text-xs text-[#2A2624]/75 mt-2 leading-relaxed">
+            Final price may change by date, provider and ticket type. {a.priceDetails}
+          </p>
+        </div>
+
+        <div className="mt-4 grid md:grid-cols-2 gap-3">
+          {a.planningAdvice && (
+            <div className="border border-[#2A2624]/40 p-3">
+              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#2D4238]">Planning advice</div>
+              <p className="text-xs text-[#2A2624]/80 mt-2 leading-relaxed">{a.planningAdvice}</p>
+            </div>
+          )}
+          {a.watchOut && (
+            <div className="border border-[#C84B31]/50 bg-[#C84B31]/5 p-3">
+              <div className="font-mono text-[9px] uppercase tracking-[0.22em] text-[#C84B31]">Watch out</div>
+              <p className="text-xs text-[#2A2624]/80 mt-2 leading-relaxed">{a.watchOut}</p>
+            </div>
+          )}
+        </div>
+
+        {a.tags?.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {a.tags.map((tag) => (
+              <span key={tag} className="font-mono text-[9px] uppercase tracking-[0.15em] px-2 py-0.5 border border-[#2A2624]/35 text-[#695F59]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          <button
+            onClick={onToggle}
+            className={`press-effect inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] px-4 py-2.5 border border-[#2A2624] shadow-stamp-sm ${inPlan ? "bg-[#2A2624] text-[#F4EFE6]" : "bg-[#F4EFE6] text-[#2A2624]"}`}
+          >
+            {inPlan ? <><Check size={13}/> In plan</> : <><Plus size={13}/> Add to trip</>}
+          </button>
+          <button
+            disabled
+            className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] px-4 py-2.5 border border-[#2A2624]/40 text-[#695F59] bg-[#F4EFE6] cursor-not-allowed"
+          >
+            <Ticket size={13}/> {ticketLabel}
+          </button>
+        </div>
       </div>
-    </div>
-  </article>
-);
+    </article>
+  );
+};
 
 const Meta = ({ label, value, icon }) => (
   <div>

@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "images": {
+    "city:barcelona:featured-card": {
+      "provider": "unsplash",
+      "id": "qiH16d5SRxg",
+      "query": "Barcelona Spain travel",
+      "cachedAt": "2026-06-25T17:42:57.918Z",
+      "target": {
+        "width": 900,
+        "height": 675,
+        "ratio": 1.3333333333333333
+      },
+      "width": 4608,
+      "height": 3456,
+      "color": "#408cf3",
+      "blur_hash": "LlHLiND%buWA5ex^Vsofp3n+t7of",
+      "alt_description": "orange and blue inflatable ring",
+      "description": "A view from the benches on a summer day at Park Güell in Barcelona, Spain",
+      "urls": {
+        "raw": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0",
+        "regular": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+        "small": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0&q=80&w=400",
+        "thumb": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0&q=80&w=200"
+      },
+      "links": {
+        "html": "https://unsplash.com/photos/orange-and-blue-inflatable-ring-qiH16d5SRxg",
+        "download_location": "https://api.unsplash.com/photos/qiH16d5SRxg/download?ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA"
+      },
+      "user": {
+        "name": "D Jonez",
+        "username": "cooljonez",
+        "links": {
+          "html": "https://unsplash.com/@cooljonez"
+        }
+      }
+    },
+    "city:barcelona:result-card": {
+      "provider": "unsplash",
+      "id": "qiH16d5SRxg",
+      "query": "Barcelona Spain travel",
+      "cachedAt": "2026-06-26T12:33:13.691Z",
+      "target": {
+        "width": 900,
+        "height": 720,
+        "ratio": 1.25
+      },
+      "width": 4608,
+      "height": 3456,
+      "color": "#408cf3",
+      "blur_hash": "LlHLiND%buWA5ex^Vsofp3n+t7of",
+      "alt_description": "orange and blue inflatable ring",
+      "description": "A view from the benches on a summer day at Park Güell in Barcelona, Spain",
+      "urls": {
+        "raw": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0",
+        "regular": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+        "small": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0&q=80&w=400",
+        "thumb": "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA&ixlib=rb-4.1.0&q=80&w=200"
+      },
+      "links": {
+        "html": "https://unsplash.com/photos/orange-and-blue-inflatable-ring-qiH16d5SRxg",
+        "download_location": "https://api.unsplash.com/photos/qiH16d5SRxg/download?ixid=M3w5ODU1Njl8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBTcGFpbiUyMHRyYXZlbHxlbnwxfDB8fHwxNzgyNDA5MzIxfDA"
+      },
+      "user": {
+        "name": "D Jonez",
+        "username": "cooljonez",
+        "links": {
+          "html": "https://unsplash.com/@cooljonez"
+        }
+      }
+    }
+  }
+}

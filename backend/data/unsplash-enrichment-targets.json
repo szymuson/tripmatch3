@@ -1,0 +1,184 @@
+{
+  "targets": [
+    {
+      "key": "city:barcelona:detail-hero",
+      "query": "Barcelona Spain travel",
+      "per_page": 6,
+      "target_width": 1300,
+      "target_height": 894,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["city", "architecture", "travel", "spain"],
+        "rejected": []
+      }
+    },
+    {
+      "key": "city:barcelona:featured-card",
+      "query": "Barcelona Spain travel",
+      "per_page": 6,
+      "target_width": 900,
+      "target_height": 675,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["city", "architecture", "travel", "spain"],
+        "rejected": []
+      }
+    },
+    {
+      "key": "city:barcelona:result-card",
+      "query": "Barcelona Spain travel",
+      "per_page": 6,
+      "target_width": 900,
+      "target_height": 720,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["city", "architecture", "travel", "spain"],
+        "rejected": []
+      }
+    },
+    {
+      "key": "attraction:barcelona-sagrada-familia",
+      "query": "La Sagrada Familia Barcelona architecture",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["sagrada", "familia"],
+        "preferred": ["basilica", "gaudi", "church", "holy family", "barcelona"],
+        "rejected": ["park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo", "statue", "close up"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-park-guell",
+      "query": "Parc Guell Barcelona Gaudi architecture",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["park", "guell"],
+        "preferred": ["gaudi", "mosaic", "terrace", "tiled roof", "bench", "barcelona"],
+        "rejected": ["sagrada familia", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo", "inflatable", "ring", "skyscraper"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-gothic-quarter",
+      "query": "Gothic Quarter Barcelona old town streets",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["gothic", "quarter", "barri gotic", "old town", "cathedral", "street"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-casa-batllo",
+      "query": "Casa Batllo Barcelona",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["casa", "batllo"],
+        "preferred": ["facade", "gaudi", "architecture", "building", "tree", "front", "barcelona"],
+        "rejected": ["sagrada familia", "park guell", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo", "casa mila", "roof tiles", "clock"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-la-boqueria",
+      "query": "Mercat de la Boqueria Barcelona market",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["boqueria"],
+        "preferred": ["mercat", "market", "food", "barcelona"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "barceloneta", "port vell", "montjuic", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-barceloneta-beach",
+      "query": "Barceloneta beach Barcelona",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["barceloneta", "beach", "port vell", "waterfront", "sea", "marina"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "montjuic", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-bunkers-del-carmel",
+      "query": "Barcelona city viewpoint Carmel",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["bunkers", "carmel", "viewpoint", "panorama", "sunset"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-montjuic-castle",
+      "query": "Montjuic Castle Barcelona fortress",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["montjuic"],
+        "preferred": ["castle", "fortress", "barcelona", "hill"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-picasso-museum",
+      "query": "Museu Picasso Barcelona museum exterior",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["picasso"],
+        "preferred": ["museum", "museu", "barcelona", "art"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-palau-de-la-musica-catalana",
+      "query": "Palau de la Musica Catalana Barcelona concert hall",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["palau"],
+        "preferred": ["musica", "catalana", "concert", "interior", "barcelona"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-tibidabo",
+      "query": "Tibidabo Barcelona church amusement park",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["tibidabo"],
+        "preferred": ["church", "amusement", "view", "barcelona"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic"]
+      }
+    },
+    {
+      "key": "attraction:barcelona-el-born",
+      "query": "El Born Barcelona neighborhood street",
+      "per_page": 6,
+      "target_width": 760,
+      "target_height": 570,
+      "selector": {
+        "required": ["barcelona"],
+        "preferred": ["el born", "born", "neighborhood", "street", "bar", "boutique"],
+        "rejected": ["sagrada familia", "park guell", "casa batllo", "boqueria", "barceloneta", "port vell", "montjuic", "tibidabo"]
+      }
+    }
+  ]
+}

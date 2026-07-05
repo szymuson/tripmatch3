@@ -2,6 +2,28 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Unsplash API setup
+
+1. Create an Unsplash developer account and register an application.
+2. Copy the application's Access Key.
+3. In `backend`, copy `.env.example` to `.env` and paste the key there:
+
+```env
+UNSPLASH_ACCESS_KEY=your_access_key_here
+```
+
+4. In `frontend`, copy `.env.example` to `.env.local`:
+
+```env
+REACT_APP_UNSPLASH_ENABLED=true
+REACT_APP_BACKEND_URL=http://localhost:8001
+REACT_APP_UNSPLASH_UTM_SOURCE=TripMatch
+```
+
+5. Restart the backend and React dev server after changing env files.
+
+The frontend calls the local backend endpoint at `/api/unsplash/search`. If the backend key is missing, Unsplash is disabled, or the request fails, TripMatch falls back to the current static image URLs.
+
 ## Available Scripts
 
 In the project directory, you can run:
